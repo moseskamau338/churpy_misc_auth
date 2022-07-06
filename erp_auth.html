@@ -1,0 +1,277 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+        <title>Connect ERP | Churpy Reconciliation</title>
+        <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,400;0,700;0,900;1,400&display=swap" rel="stylesheet" />
+          <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"></script>
+        <script>
+            tailwind.config = {
+              theme: {
+                extend: {
+                  fontSize:{
+                    'xs': '.75rem',
+                  },
+                  colors:{
+                    'litepie-primary': colors.green, // color system for light mode
+                    'litepie-secondary': colors.gray, // color system for dark mode
+                    'churpy-green':'#40ba58',
+                    'light-green':'#E5F8ED',
+                    'success':'#55C770',
+                    'churpy-navy':'#0a122a',
+                    'churpy-dark':'#283045',
+                    // dark mode vars
+                    'churpy-night':'#0F172A',
+                    'churpy-night-box':'#1E293B',
+
+                    'brand-gray':'#656B7A',
+                    'prose':'#474a52'
+                  }
+                }
+              }
+            }
+          </script>
+    </head>
+
+    <body class="bg-gray-200" style="font-family: 'Lato', sans-serif; height: 600px">
+        <div class="h-full w-full absolute">
+            <!-- Navigation starts -->
+            <!-- Mobile -->
+            <div id="mobile-nav" class="w-full xl:hidden h-full absolute z-40">
+                <div class="bg-gray-800 opacity-50 inset-0 fixed w-full h-full" onclick="sidebarHandler(false)"></div>
+                <div class="w-64 z-20 absolute left-0 z-40 top-0 bg-white shadow flex-col justify-between transition duration-150 ease-in-out h-full">
+                    <div class="flex flex-col justify-between h-full">
+                        <div class="px-6 pt-4 overflow-y-auto">
+                            <div class="flex items-center justify-between">
+                                <div aria-label="Home" class="flex items-center text-white">
+                                    Churpy
+                                </div>
+                                <button id="cross" class="hidden text-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 rounded" onclick="sidebarHandler(false)">
+                                    <svg aria-label="close sidebar" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-x" width="24" height="24" viewBox="0 0 24 24" stroke-width="1" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path stroke="none" d="M0 0h24v24H0z" />
+                                        <line x1="18" y1="6" x2="6" y2="18" />
+                                        <line x1="6" y1="6" x2="18" y2="18" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <ul class="f-m-m">
+                                <li class="text-white pt-8">
+                                    <div class="flex items-center">
+                                        <a href="https://churpy.co" class="text-indigo-500 ml-3 text-lg">Home</a>
+                                    </div>
+                                </li>
+                                <li class="text-white pt-8">
+                                    <div class="flex items-center">
+                                        <a href="https://developer.chupry.co" class="text-gray-700 ml-3 text-lg">Developers</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <!-- Mobile -->
+            <nav class="w-full mx-auto bg-[#1E293B] text-white shadow">
+                <div class="container px-6 justify-between h-16 flex items-center lg:items-stretch mx-auto">
+                    <img class="w-32" src="/images/logo-light.svg" alt="Churpy Inc">
+                    <div class="h-full xl:flex items-center justify-end hidden">
+                        <ul class="pr-12 xl:flex items-center h-full hidden">
+                            <!--active: border-b-4 border-green-500-->
+                            <li class="hover:text-green-500 cursor-pointer h-full flex items-center text-sm hover:underline tracking-normal"><a href="javascript:void(0)"> Home</a></li>
+                            <li class="hover:text-green-600 hover:underline cursor-pointer h-full flex items-center text-sm mx-10 tracking-normal" ><a href="javascript:void(0)">Developers</a></li>
+                        </ul>
+                    </div>
+                    <div class="visible xl:hidden flex items-center">
+                        <div>
+                            <button id="menu" class="rounded focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300" onclick="sidebarHandler(true) ">
+                                <svg aria-label="open sidebar menu" xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-menu-2" width="24" height="24" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                                    <line x1="4" y1="6" x2="20" y2="6" />
+                                    <line x1="4" y1="12" x2="20" y2="12" />
+                                    <line x1="4" y1="18" x2="20" y2="18" />
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+            <!-- Navigation ends -->
+            <!-- Page title starts -->
+            <div class="flex justify-center mt-8 lg:mt-12 mb-6">
+
+                <div class="flex space-x-10 justify-between items-center">
+                    <span class="h-20 w-20 p-2 flex items-center justify-center rounded-full bg-gray-900 border-green-500 border-2 shadow-lg">
+                        <img src="/images/logo-icon.png" alt="">
+                    </span>
+                    <span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                    </span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-14 mt-2" viewBox="0 0 129.284 49.215">
+                      <g id="layer1" transform="translate(0)">
+                        <g id="g2659" transform="translate(0 0)">
+                          <path id="path2629" d="M-12.816,199.57c-9.988,0-16.51,6.841-16.51,18.152,0,14.047,9.988,18.061,17.148,18.061a19.555,19.555,0,0,0,14.184-6.066L-2.6,225.11a13.3,13.3,0,0,1-9.486,3.512c-5.564,0-9.3-3.238-9.3-7.708H3.421c-.046-.046,4.287-21.344-16.236-21.344M-21.39,214.8c0-6.02,4.561-8.893,9.441-8.893s9.3,2.964,9.3,8.893Z" transform="translate(125.511 -199.569)" fill="#00dc06"/>
+                          <path id="path2631" d="M-63.782,214.21c-3.193-.41-12.36-.045-12.36-4.241,0-2.463,3.877-3.831,7.388-3.831a18.876,18.876,0,0,1,10.49,3.01l4.789-4.743c-1.414-1.14-6.659-4.834-15.278-4.834-7.844,0-14.914,4.1-14.914,10.672,0,10.079,12.177,10.079,17.24,10.581,3.1.319,5.883.5,5.883,3.512,0,2.828-4.287,4.378-7.616,4.378a16.094,16.094,0,0,1-11.858-4.652l-5.108,5.154a23.534,23.534,0,0,0,16.555,6.567c9.121,0,15.735-4.013,15.735-12.086,0-5.336-3.6-8.529-10.946-9.486" transform="translate(85.126 -199.569)" fill="#00dc06"/>
+                          <path id="path2633" d="M-51.371,199.57a22.3,22.3,0,0,0-14,4.834l4.789,4.789a15.1,15.1,0,0,1,9.258-3.01c6.066,0,7.89,2.417,7.89,5.154v3.421H-54.245c-4.013,0-11.858,1-11.858,9.806,0,6.476,3.694,11.219,12.542,11.219,4.424,0,7.8-1.414,10.125-4.2V235.1h7.844V211.884c0-8.118-4.971-12.314-15.78-12.314m7.981,22.849c0,6.7-4.789,6.339-9.03,6.339s-7.069-1.14-7.069-4.15c0-2.782,2.235-3.74,6.887-3.74h9.213Z" transform="translate(98.894 -199.569)" fill="#00dc06"/>
+                          <path id="path2635" d="M-24.529,200.3v3.877a12.743,12.743,0,0,0-10.216-4.606c-7.434,0-11.265,4.15-12.542,8.62-.5,1.642-.639,4.789-.639,9.441,0,4.378.046,8.392,1.551,11.447,2.144,4.287,7.3,6.7,11.63,6.7a13.222,13.222,0,0,0,10.216-4.47V233.5a6.559,6.559,0,0,1-2.508,5.564A9.949,9.949,0,0,1-33.6,241.21a11.936,11.936,0,0,1-6.476-2.417l-5.29,5.29a19.281,19.281,0,0,0,11.9,4.7,17.984,17.984,0,0,0,11.721-3.968c3.147-2.463,5.154-7.16,5.154-12.086V200.3Zm0,17.331a34.506,34.506,0,0,1-.274,5.747c-.5,2.235-3.056,5.2-7.708,5.2-1.186,0-7.115-.684-7.8-5.838a38.3,38.3,0,0,1-.228-5.108,32.548,32.548,0,0,1,.365-6.294c.41-2.007,3.056-5.017,7.662-5.017,5.61,0,7.434,3.831,7.708,5.336a43.338,43.338,0,0,1,.274,5.975" transform="translate(112.05 -199.569)" fill="#00dc06"/>
+                        </g>
+                      </g>
+                    </svg>
+
+                </div>
+
+            </div>
+            <div class="max-w-3xl container px-6 mx-auto flex flex-col lg:flex-row items-start lg:items-center justify-between pb-4">
+
+
+                <div class="bg-white text-gray-700 rounded rounded-tr-lg rounded-tl-lg shadow w-full">
+                    <header class="bg-gradient-to-r from-green-600 via-green-600 to-gray-800/90 dark:bg-gray-700 m-0 px-3 pt-3 pb-2 flex justify-between text-white px-4 rounded-tr-lg rounded-tl-lg">
+                          <h3 class="font-bold text-lg">
+                            Authenticate  Sage Intact
+                          </h3>
+
+                        </header>
+                    <div class="w-full p-3">
+                        <p>Please enter the details required below to <b>authenticate</b> your accounting system.</p>
+                        <p>If you are <b>not sure</b> what is required, please check the <b>appropriate documentation</b></p>
+                        <form action="" class="mt-8 px-7 py-4 rounded max-h-[400px] overflow-y-auto pb-8 flex flex-col space-y-5 border">
+                            <h2 class="text-lg font-bold">Fill in the details appropriately</h2>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Serial Number </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Auth Key </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Accounting Database Server </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Accounting Database Name </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Accounting Database User </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Common Database Server </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Common Database Name </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+                            <div>
+                              <label class="block font-bold text-gray-700"> Common Database User </label>
+                              <div class="mt-1">
+                                <input type="text" required class="shadow-sm focus:ring-green-500 focus:border-green-500 block w-[80%] sm:text-sm border-gray-300 rounded-md" />
+                              </div>
+                            </div>
+
+
+                        </form>
+                            <div class="mt-4 flex justify-end">
+                                <button type="button" class="inline-flex items-center px-3 py-2 text-sm leading-4 font-medium rounded shadow-sm text-gray-600 border-2 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 mr-3">Cancel</button>
+
+                                <button type="button" class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded shadow-sm text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500">Authenticate</button>
+
+                            </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div class="flex justify-center w-full pb-8">
+                <p>Your data is protected by our <a href="#" class="hover:underline font-bold text-green-600">Privacy Policy</a> and <a href="#" class="hover:underline font-bold text-green-600">Terms and Conditions</a></p>
+            </div>
+
+        </div>
+        <script>
+            function dropdownHandler(element) {
+                let single = element.getElementsByTagName("ul")[0];
+                single.classList.toggle("hidden");
+            }
+            function MenuHandler(el, val) {
+                let MainList = el.parentElement.getElementsByTagName("ul")[0];
+                let closeIcon = el.parentElement.getElementsByClassName("close-m-menu")[0];
+                let showIcon = el.parentElement.getElementsByClassName("show-m-menu")[0];
+                if (val) {
+                    MainList.classList.remove("hidden");
+                    el.classList.add("hidden");
+                    closeIcon.classList.remove("hidden");
+                } else {
+                    showIcon.classList.remove("hidden");
+                    MainList.classList.add("hidden");
+                    el.classList.add("hidden");
+                }
+            }
+            let sideBar = document.getElementById("mobile-nav");
+            let menu = document.getElementById("menu");
+            let cross = document.getElementById("cross");
+            sideBar.style.transform = "translateX(-100%)";
+            const sidebarHandler = (check) => {
+                if (check) {
+                    sideBar.style.transform = "translateX(0px)";
+                    menu.classList.add("hidden");
+                    cross.classList.remove("hidden");
+                } else {
+                    sideBar.style.transform = "translateX(-100%)";
+                    menu.classList.remove("hidden");
+                    cross.classList.add("hidden");
+                }
+            };
+            let list = document.getElementById("list");
+            let chevrondown = document.getElementById("chevrondown");
+            let chevronup = document.getElementById("chevronup");
+            const listHandler = (check) => {
+                if (check) {
+                    list.classList.remove("hidden");
+                    chevrondown.classList.remove("hidden");
+                    chevronup.classList.add("hidden");
+                } else {
+                    list.classList.add("hidden");
+                    chevrondown.classList.add("hidden");
+                    chevronup.classList.remove("hidden");
+                }
+            };
+            let list2 = document.getElementById("list2");
+            let chevrondown2 = document.getElementById("chevrondown2");
+            let chevronup2 = document.getElementById("chevronup2");
+            const listHandler2 = (check) => {
+                if (check) {
+                    list2.classList.remove("hidden");
+                    chevrondown2.classList.remove("hidden");
+                    chevronup2.classList.add("hidden");
+                } else {
+                    list2.classList.add("hidden");
+                    chevrondown2.classList.add("hidden");
+                    chevronup2.classList.remove("hidden");
+                }
+            };
+        </script>
+        <script src="./index.js"></script>
+    </body>
+</html>
